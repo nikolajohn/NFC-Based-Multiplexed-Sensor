@@ -1,0 +1,560 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+****************************************************************************
+* Copyright(c) 2014 NXP Semiconductors                                     *
+* All rights are reserved.                                                 *
+*                                                                          *
+* Software that is described herein is for illustrative purposes only.     *
+* This software is supplied "AS IS" without any warranties of any kind,    *
+* and NXP Semiconductors disclaims any and all warranties, express or      *
+* implied, including all implied warranties of merchantability,            *
+* fitness for a particular purpose and non-infringement of intellectual    *
+* property rights.  NXP Semiconductors assumes no responsibility           *
+* or liability for the use of the software, conveys no license or          *
+* rights under any patent, copyright, mask work right, or any other        *
+* intellectual property rights in or to any products. NXP Semiconductors   *
+* reserves the right to make changes in the software without notification. *
+* NXP Semiconductors also makes no representation or warranty that such    *
+* application will be suitable for the specified use without further       *
+* testing or modification.                                                 *
+*                                                                          *
+* Permission to use, copy, modify, and distribute this software and its    *
+* documentation is hereby granted, under NXP Semiconductors' relevant      *
+* copyrights in the software, without fee, provided that it is used in     *
+* conjunction with NXP Semiconductor products(UCODE I2C, NTAG I2C).        *
+* This  copyright, permission, and disclaimer notice must appear in all    *
+* copies of this code.                                                     *
+****************************************************************************
+-->
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical">
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/myscrollview"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="5dp"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:weightSum="2">
+
+                    <Button
+                        android:id="@+id/readNdefButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="Data Reading"
+                        android:textColor="#000000" />
+
+
+                </LinearLayout>
+
+
+                <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    xmlns:tools="http://schemas.android.com/tools"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:background="#cf9FD661"
+                        android:columnCount="4"
+                        android:orientation="horizontal"
+                        tools:context=".MainActivity">
+
+                        <TextView
+                            android:id="@+id/TempData"
+                            android:layout_height="70dp"
+                            android:layout_columnWeight="0.5"
+                            android:layout_gravity="right"
+                            android:gravity="right|center"
+                            android:text="25"
+                            android:textColor="#595959"
+                            android:textSize="30dp" />
+
+                        <TextView
+                            android:id="@+id/textviewTempUnit"
+                            android:layout_height="70dp"
+                            android:layout_gravity="left"
+                            android:gravity="left|center"
+                            android:text="°C"
+                            android:textColor="#3B3B3B"
+                            android:textSize="30dp" />
+
+                        <ImageView
+                            android:id="@+id/textviewTimingImage"
+                            android:layout_height="60dp"
+                            android:layout_columnWeight="2"
+                            android:layout_gravity="center|right"
+                            android:gravity="center|left"
+                            android:src="@mipmap/timer" />
+
+                        <Chronometer
+                            android:id="@+id/timer"
+                            android:layout_height="60dp"
+                            android:layout_columnWeight="0.8"
+                            android:layout_gravity="center"
+                            android:gravity="left|center"
+                            android:format="00:00:00"
+                            android:textColor="#3B3B3B"
+                            android:textSize="25dp" />
+
+                    </GridLayout>
+
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="3"
+                        android:orientation="horizontal"
+                        tools:context=".MainActivity">
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                            android:id="@+id/LinearBox1"
+                            android:layout_height="160dp"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <GridLayout
+                                android:id="@+id/LinearBox12"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:columnCount="2"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/ndefTextone"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="3"
+                                    android:gravity="bottom|right"
+                                    android:text="0"
+                                    android:textColor="#000000"
+                                    android:textSize="46dp" />
+
+                                <TextView
+                                    android:id="@+id/textviewNaUnit"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="1"
+                                    android:gravity="bottom|left"
+                                    android:text="  μmol"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="10dp" />
+
+                            </GridLayout>
+
+                            <TextView
+                                android:id="@+id/textviewNa"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="Glu"
+                                android:textColor="#3B3B3B"
+                                android:textSize="30dp"
+                                android:typeface="sans" />
+
+
+                        </android.support.v7.widget.LinearLayoutCompat>
+
+
+                        <TextView
+                            android:id="@+id/line1"
+                            android:layout_width="1dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:background="#595959"
+                            android:gravity="center" />
+
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                            android:id="@+id/LinearBox2"
+                            android:layout_height="160dp"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <GridLayout
+                                android:id="@+id/LinearBox22"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:columnCount="2"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/ndefTexttwo"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="2"
+                                    android:gravity="bottom|right"
+                                    android:text="0"
+                                    android:textColor="#000000"
+                                    android:textSize="46dp" />
+
+                                <TextView
+                                    android:id="@+id/textviewKUnit"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="1"
+                                    android:gravity="bottom|left"
+                                    android:text="      "
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="10dp" />
+
+                            </GridLayout>
+
+                            <TextView
+                                android:id="@+id/textviewK"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="pH"
+                                android:textColor="#3B3B3B"
+                                android:textSize="30dp"
+                                android:typeface="sans"/>
+
+
+                        </android.support.v7.widget.LinearLayoutCompat>
+
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                            android:id="@+id/LinearBox3"
+                            android:layout_height="160dp"
+                            android:layout_columnWeight="1"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <GridLayout
+                                android:id="@+id/LinearBox32"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:columnCount="2"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/ndefTextthree"
+                                    android:layout_width="0dp"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="2"
+                                    android:gravity="right|bottom"
+                                    android:text="0"
+                                    android:textColor="#000000"
+                                    android:textSize="46dp" />
+
+                                <TextView
+                                    android:id="@+id/textviewPHUnit"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="1"
+                                    android:gravity="bottom|left"
+                                    android:text="mM"
+                                    android:textSize="10dp" />
+
+                            </GridLayout>
+
+                            <TextView
+                                android:id="@+id/textviewPH"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="Na"
+                                android:textColor="#3B3B3B"
+                                android:textSize="30dp"
+                                android:typeface="sans" />
+
+                        </android.support.v7.widget.LinearLayoutCompat>
+
+
+                        <TextView
+                            android:id="@+id/line2"
+                            android:layout_width="1dp"
+                            android:layout_height="110dp"
+                            android:layout_gravity="center"
+                            android:background="#595959"
+                            android:gravity="center" />
+
+
+                        <android.support.v7.widget.LinearLayoutCompat
+                            android:id="@+id/LinearBox4"
+                            android:layout_height="160dp"
+                            android:layout_columnWeight="1"
+                            android:layout_gravity="top"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+
+                            <GridLayout
+                                android:id="@+id/LinearBox42"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:columnCount="2"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/ndefTextfour"
+                                    android:layout_width="0dp"
+                                    android:layout_height="match_parent"
+                                    android:layout_columnWeight="2"
+                                    android:gravity="bottom|right"
+                                    android:text="0"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="46dp" />
+
+                                <TextView
+                                    android:id="@+id/textviewGluUnit"
+                                    android:layout_height="70dp"
+                                    android:layout_columnWeight="1"
+                                    android:gravity="bottom|left"
+                                    android:text="mM"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="10dp" />
+
+                            </GridLayout>
+
+                            <TextView
+                                android:id="@+id/textviewGlu"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:gravity="center"
+                                android:text="K"
+                                android:textColor="#3B3B3B"
+                                android:textSize="30dp"
+                                android:typeface="sans"/>
+
+                        </android.support.v7.widget.LinearLayoutCompat>
+
+
+                    </GridLayout>
+
+                    <Button
+                        android:id="@+id/CorrectionButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="one-point calibration"
+                        android:textColor="#000000" />
+
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:orientation="horizontal">
+
+                    <GridLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:columnCount="5"
+                        android:orientation="horizontal">
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:orientation="horizontal">
+
+                            <GridLayout
+                                android:id="@+id/new1"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:columnCount="4"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/NewText1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="top"
+                                    android:gravity="right|center"
+                                    android:text="Na:"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/NewText2"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="top"
+                                    android:gravity="center"
+                                    android:text=" 517 "
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="30dp" />
+
+                                <TextView
+                                    android:id="@+id/NewText3"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="center|left"
+                                    android:gravity="center"
+                                    android:text="mV"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/newline1"
+                                    android:layout_width="1dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:background="#595959"
+                                    android:gravity="bottom" />
+
+                            </GridLayout>>
+
+                        </LinearLayout>
+
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:orientation="horizontal">
+
+                            <GridLayout
+                                android:id="@+id/new2"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:columnCount="4"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/NewText4"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="top"
+                                    android:gravity="right|center"
+                                    android:text="K:"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/NewText5"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="top"
+                                    android:gravity="center"
+                                    android:text=" 578 "
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="30dp" />
+
+                                <TextView
+                                    android:id="@+id/NewText6"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="center|left"
+                                    android:gravity="center"
+                                    android:text="mV"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/newline2"
+                                    android:layout_width="1dp"
+                                    android:layout_height="30dp"
+                                    android:layout_gravity="center"
+                                    android:background="#595959"
+                                    android:gravity="center" />
+
+                            </GridLayout>
+
+                        </LinearLayout>
+
+
+                        <LinearLayout
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_columnWeight="1"
+                            android:orientation="horizontal">
+
+                            <GridLayout
+                                android:id="@+id/new3"
+                                android:layout_width="match_parent"
+                                android:layout_height="70dp"
+                                android:layout_gravity="top"
+                                android:columnCount="3"
+                                android:gravity="top"
+                                android:orientation="horizontal">
+
+                                <TextView
+                                    android:id="@+id/NewText7"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="top"
+                                    android:gravity="center|right"
+                                    android:text="H:"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="15dp" />
+
+                                <TextView
+                                    android:id="@+id/NewText8"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="top"
+                                    android:gravity="center"
+                                    android:text=" 555 "
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="30dp" />
+
+                                <TextView
+                                    android:id="@+id/NewText9"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="70dp"
+                                    android:layout_gravity="center|left"
+                                    android:gravity="center"
+                                    android:text="mV"
+                                    android:textColor="#3B3B3B"
+                                    android:textSize="15dp" />
+
+                            </GridLayout>
+
+                        </LinearLayout>
+
+
+                    </GridLayout>
+
+                </LinearLayout>
+
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+
+
+</LinearLayout>
