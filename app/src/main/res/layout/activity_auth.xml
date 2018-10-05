@@ -38,7 +38,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:background="#9FD661"
-        android:text="NFC Connected"
+        android:text="NFC Connecting"
         android:textSize="28sp"
         android:layout_marginTop="180dp" />
 
@@ -92,7 +92,7 @@
         android:layout_centerHorizontal="true"
         android:gravity="center"
         android:background="#9FD661"
-        android:text="NFC Connected"
+        android:text="NFC Connecting"
         android:textColor="#ffffff"
         android:textSize="28sp"
         android:layout_marginTop="180dp" />

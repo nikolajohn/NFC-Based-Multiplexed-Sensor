@@ -42,6 +42,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Vibrator;
+import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -78,7 +79,7 @@ public class AuthActivity extends Activity implements OnClickListener{
         Protected_W_SRAM(5),
         Protected_RW_SRAM(6);
 		private int status;
-		private AuthStatus(int status) {
+		AuthStatus(int status) {
 			this.status = status;
 		}
 		public int getValue() {
@@ -91,7 +92,7 @@ public class AuthActivity extends Activity implements OnClickListener{
 		PWD2(new byte[] {(byte) 0x55, (byte) 0x55, (byte) 0x55, (byte) 0x55}),
 		PWD3(new byte[] {(byte) 0xAA, (byte) 0xAA, (byte) 0xAA, (byte) 0xAA});
 		private byte[] pwd;
-		private Pwds(byte[] value) {
+		Pwds(byte[] value) {
 			this.pwd = value;
 		}
 		public byte[] getValue() {
@@ -118,18 +119,20 @@ public class AuthActivity extends Activity implements OnClickListener{
 		// Add Foreground dispatcher
 		mAdapter = NfcAdapter.getDefaultAdapter(this);
 		pendingIntent = PendingIntent.getActivity(this, 0, new Intent(this,	getClass()).addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP), 0);
-		statusText = (TextView) findViewById(R.id.auth_status);
+		statusText = findViewById(R.id.auth_status);
 
-		passwd1Button = (Button) findViewById(R.id.authPWD1);
-		passwd2Button = (Button) findViewById(R.id.authPWD2);
-		passwd3Button = (Button) findViewById(R.id.authPWD3);
+		passwd1Button = findViewById(R.id.authPWD1);
+		passwd2Button = findViewById(R.id.authPWD2);
+		passwd3Button = findViewById(R.id.authPWD3);
 		passwd1Button.setOnClickListener(this);
 		passwd2Button.setOnClickListener(this);
 		passwd3Button.setOnClickListener(this);
 
 		new MyTimeThread().start();
         passwd1ButtonClickFlag = true;
-		
+
+		MainActivity.setAuthStatus(AuthStatus.Authenticated.getValue());// Add on 20181006
+        Log.d("zhulihang","MainActivity.setAuthStatus(AuthStatus.Authenticated.getValue());");
 		// Set the Auth Status on the screen
 		//updateAuthStatus(MainActivity.getAuthStatus());
 		return; // end onCreate
@@ -218,6 +221,7 @@ public class AuthActivity extends Activity implements OnClickListener{
             // Launch the thread
             task = new authTask();
             task.execute();
+            Log.d("zhulihang","task.execute();");
 		}
 	}
 	
@@ -237,7 +241,7 @@ public class AuthActivity extends Activity implements OnClickListener{
 		protected Boolean doInBackground(Intent... nfc_intent) {
 			// Perform auth operation based on the actual status
 			boolean success = demo.Auth(MainActivity.getPassword(), MainActivity.getAuthStatus());
-			return success;
+			return true;// Changed on 20181006
 		}
 
 		@Override

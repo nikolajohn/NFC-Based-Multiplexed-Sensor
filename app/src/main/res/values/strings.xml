@@ -83,7 +83,7 @@
     <string name="MemorySwitch">Memory:</string>
     <string name="rf_send">Send</string>
     <string name="scroll">Display NDEF message on LCD</string>
-    <string name="lcd">Enable LCD</string>
+    <string name="lcd">LCD</string>
     <string name="temperature">Enable Temperature Sensor</string>
     <string name="Ndef_char_multipl">Enter text multiplier</string>
     <string name="Block_multipl">Data length: </string>

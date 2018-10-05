@@ -71,8 +71,8 @@ public class SpeedTestFragment extends Fragment implements
 		super.onCreate(savedInstanceState);
 
 		// Values per default
-		this.rfMemChosen = true;
-		this.rfChosen = true;
+		rfMemChosen = true;
+		rfChosen = true;
 		setRetainInstance(true);
 	}
 
@@ -81,18 +81,18 @@ public class SpeedTestFragment extends Fragment implements
 			Bundle savedInstanceState) {
 		View layout = inflater.inflate(R.layout.fragment_speedtest, container,
 				false);
-		rfButtonSpeedtest = (Button) layout.findViewById(R.id.startSpeedtest);
+		rfButtonSpeedtest = layout.findViewById(R.id.startSpeedtest);
 		rfButtonSpeedtest.setOnClickListener(this);
-		rfReadOptions = (RadioGroup) layout
+		rfReadOptions = layout
 				.findViewById(R.id.radioReadOptions);
-		rfMemOptions = (RadioGroup) layout
+		rfMemOptions = layout
 				.findViewById(R.id.radioMemoryOptions);
 		rfMemOptions.setOnCheckedChangeListener(this);
-		rfTextCallback = (TextView) layout.findViewById(R.id.rf_textCallback);
-		rfDatarateCallback = (TextView) layout.findViewById(R.id.rf_datarateCallback);
+		rfTextCallback = layout.findViewById(R.id.rf_textCallback);
+		rfDatarateCallback = layout.findViewById(R.id.rf_datarateCallback);
 		rfDatarateCallback.setMovementMethod(new ScrollingMovementMethod());
-		rfEditCharMulti = (EditText) layout.findViewById(R.id.editCharMultipl);
-		rfTextCharMulti = (TextView) layout.findViewById(R.id.textCharMultipl);
+		rfEditCharMulti = layout.findViewById(R.id.editCharMultipl);
+		rfTextCharMulti = layout.findViewById(R.id.textCharMultipl);
 		rfEditCharMulti.setText("10");
 		rfEditCharMulti.addTextChangedListener(charMultiListener);
 		return layout;
@@ -177,7 +177,7 @@ public class SpeedTestFragment extends Fragment implements
 		try {
 			msg = createNdefMessage(messageText);
 			int ndef_message_size = (msg.toByteArray().length + 5);
-			ndef_message_size = (int) Math.round(ndef_message_size / 4)	* 4;
+			ndef_message_size = Math.round(ndef_message_size / 4) * 4;
 			overhead = ndef_message_size - (bytes);
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
@@ -208,26 +208,14 @@ public class SpeedTestFragment extends Fragment implements
 	private void StartEEPROMSpeedTest() {
 		if (MainActivity.demo.isReady() && MainActivity.demo.isConnected()) {
 			MainActivity.demo.finishAllTasks();
-			try {
-				MainActivity.demo.EEPROMSpeedtest();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (FormatException e) {
-				e.printStackTrace();
-			}
+			MainActivity.demo.EEPROMSpeedtest();
 		}
 	}
 
 	private void StartSRAMSpeedTest() {
 		if (MainActivity.demo.isReady() && MainActivity.demo.isConnected()) {
 			MainActivity.demo.finishAllTasks();
-			try {
-				MainActivity.demo.SRAMSpeedtest();
-			} catch (IOException e) {
-				e.printStackTrace();
-			} catch (FormatException e) {
-				e.printStackTrace();
-			}
+			MainActivity.demo.SRAMSpeedtest();
 		}
 	}
 

@@ -65,6 +65,7 @@ import com.example.administrator.wrongtry.activities.activities.FlashMemoryActiv
 import com.example.administrator.wrongtry.activities.activities.MainActivity;
 import com.example.administrator.wrongtry.activities.activities.RegisterConfigActivity;
 import com.example.administrator.wrongtry.activities.activities.RegisterSessionActivity;
+import com.example.administrator.wrongtry.activities.activities.SramTestActivity;
 import com.example.administrator.wrongtry.activities.activities.VersionInfoActivity;
 import com.example.administrator.wrongtry.activities.crypto.CRC32Calculator;
 import com.example.administrator.wrongtry.activities.exceptions.CommandNotSupportedException;
@@ -97,6 +98,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
      * Inner Class
      */
     private LedTask lTask;
+    private MyLedTask MylTask;
     private SRAMSpeedtestTask sramspeedtask;
     private EEPROMSpeedtestTask eepromspeedtask;
     private WriteEmptyNdefTask emptyNdeftask;
@@ -840,6 +842,71 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
         lTask = new LedTask();
         lTask.execute();
     }
+
+    public void MyLED() {
+        MylTask = new MyLedTask();
+        MylTask.execute();
+    }
+
+    private class MyLedTask extends AsyncTask<Void, Byte[], Void> {
+
+        @Override
+        protected Void doInBackground(Void... voids) {
+            byte[] dataTx = new byte[reader.getSRAMSize()];
+            byte[] dataRx = new byte[reader.getSRAMSize()];
+            Byte[][] result;
+
+            long RegTimeOutStart = System.currentTimeMillis();
+            boolean RTest = false;
+            Log.d("zhulihang","doInBackground");
+            try {
+                do {
+                    if (reader.checkPTwritePossible()) {
+                        break;
+                    }
+                    long RegTimeOut = System.currentTimeMillis();
+                    RegTimeOut = RegTimeOut - RegTimeOutStart;
+                    RTest = (RegTimeOut < 5000);
+                } while (RTest);
+                Log.d("zhulihang","RTestOver");
+                // Do as long as no Exception is thrown
+                while (true) {
+
+                    if (SramTestActivity.MyLcdEnabled()) {
+                        dataTx[reader.getSRAMSize() - 10] = 'E';
+                    } else {
+                        dataTx[reader.getSRAMSize() - 10] = 0x00;
+                    }
+
+                    // wait to prevent that a RF communication is
+                    // at the same time as µC I2C
+                    Thread.sleep(10);
+                    reader.waitforI2Cread(DELAY_TIME);
+                    reader.writeSRAMBlock(dataTx, null);
+                    Log.d("zhulihang","writeSRAMBlockOver");
+                    // wait to prevent that a RF communication is
+                    // at the same time as µC I2C
+                    Thread.sleep(10);
+                    reader.waitforI2Cwrite(100);
+                }
+            } catch (FormatException e) {
+                cancel(true);
+                e.printStackTrace();
+            } catch (IOException e) {
+                cancel(true);
+                e.printStackTrace();
+            } catch (CommandNotSupportedException e) {
+                showDemoNotSupportedAlert();
+                cancel(true);
+                e.printStackTrace();
+            } catch (Exception e) {
+                cancel(true);
+                e.printStackTrace();
+            }
+            return null;
+        }
+    }
+
 
     private class LedTask extends AsyncTask<Void, Byte[], Void> {
         private final byte deviceToTag = 1;
