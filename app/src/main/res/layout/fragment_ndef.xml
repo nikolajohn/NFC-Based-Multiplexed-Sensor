@@ -355,7 +355,7 @@
                     </GridLayout>
 
                     <Button
-                        android:id="@+id/CorrectionButton"
+                        android:id="@+id/correctionButton"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_weight="1"

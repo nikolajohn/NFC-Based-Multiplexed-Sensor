@@ -67,7 +67,12 @@ public class LedFragment extends Fragment implements OnClickListener {
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		anim = AnimationUtils.loadAnimation(getActivity(), R.anim.ntag);
+		/*
+        Load the animation from ntag.xml
+        here "getActivity()" cannot be replaced by "this"
+        */
+        anim = AnimationUtils.loadAnimation(getActivity(), R.anim.ntag);
+        // initial
 		voltage = 0;
 		temperatureC = 0;
 		temperatureF = 0;
@@ -75,6 +80,7 @@ public class LedFragment extends Fragment implements OnClickListener {
 		option = "L2";
 		lastOption = "L2";
 		isSwitchedOn = true;
+		// Not immediately destroyed
 		setRetainInstance(true);
 	}
 
@@ -91,17 +97,17 @@ public class LedFragment extends Fragment implements OnClickListener {
 	}
 
 	private void setButtonCallbacks(View layout) {
-		((Button) layout.findViewById(R.id.redButton)).setOnClickListener(this);
-		((Button) layout.findViewById(R.id.blueButton)).setOnClickListener(this);
-		((Button) layout.findViewById(R.id.greenButton)).setOnClickListener(this);
-		((Button) layout.findViewById(R.id.offButton)).setOnClickListener(this);
+		layout.findViewById(R.id.redButton).setOnClickListener(this);
+		layout.findViewById(R.id.blueButton).setOnClickListener(this);
+		layout.findViewById(R.id.greenButton).setOnClickListener(this);
+		layout.findViewById(R.id.offButton).setOnClickListener(this);
 	}
 
 	private void initVariables(View layout) {
-		nxpPressedButtons = (ImageView) layout.findViewById(R.id.nxp_pressed_buttons);
-		lcdCheck = (CheckBox) layout.findViewById(R.id.LCD_checkbox);
-		tempCheck = (CheckBox) layout.findViewById(R.id.Temp_Sensor_checkbox);
-		Scroll_check = (CheckBox) layout.findViewById(R.id.Ndef_Scroll_checkbox);
+		nxpPressedButtons = layout.findViewById(R.id.nxp_pressed_buttons);
+		lcdCheck = layout.findViewById(R.id.LCD_checkbox);
+		tempCheck = layout.findViewById(R.id.Temp_Sensor_checkbox);
+		Scroll_check = layout.findViewById(R.id.Ndef_Scroll_checkbox);
 		
 		// Scroll is only available when LCD is enabled
 		lcdCheck.setOnCheckedChangeListener(new OnCheckedChangeListener() {
@@ -116,10 +122,10 @@ public class LedFragment extends Fragment implements OnClickListener {
 				}
 			}
 		});
-		ntagLogo = (ImageView) layout.findViewById(R.id.trafficlight);
-		textCallback = (TextView) layout.findViewById(R.id.textCallback);
-		texttransferDir = (TextView) layout.findViewById(R.id.TransferDirection);
-		textSelectColor = (TextView) layout.findViewById(R.id.textSelectColor);
+		ntagLogo = layout.findViewById(R.id.trafficlight);
+		textCallback = layout.findViewById(R.id.textCallback);
+		texttransferDir = layout.findViewById(R.id.TransferDirection);
+		textSelectColor = layout.findViewById(R.id.textSelectColor);
 		
 		// Let the user switch off the LED by clicking on the NTAG logo
 		ntagLogo.setOnClickListener(new OnClickListener() {

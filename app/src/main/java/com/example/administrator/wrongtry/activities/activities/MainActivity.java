@@ -102,6 +102,7 @@ public class MainActivity extends FragmentActivity  {
 	// Current used password
 	private static byte[] mPassword;
 
+	// get method
 	public static Intent getmIntent() {
 		return mIntent;
 	}
@@ -124,12 +125,12 @@ public class MainActivity extends FragmentActivity  {
 				getBaseContext().getResources().getDisplayMetrics());
 		setContentView(R.layout.activity_main);
 
-		RecordCurrentTime = true;// 初始化为true
-        CurrentTime = 0;// 初始化为0
+		RecordCurrentTime = true;// record current time flag
+        CurrentTime = 0;// initial as 0
 
-		mTabHost = (TabHost) findViewById(android.R.id.tabhost);
+		mTabHost = findViewById(android.R.id.tabhost);
 		mTabHost.setup();
-		mViewPager = (ViewPager) findViewById(R.id.pager);
+		mViewPager = findViewById(R.id.pager);
 		mTabsAdapter = new TabsAdapter(this, mTabHost, mViewPager);
 
 		/*mTabsAdapter.addTab(
@@ -139,11 +140,11 @@ public class MainActivity extends FragmentActivity  {
 				mTabHost.newTabSpec("读取数据").setIndicator(
 						getString(R.string.ndefs)), NdefFragment.class, null);
 		mTabsAdapter.addTab(
-				mTabHost.newTabSpec("读取数据").setIndicator(
+				mTabHost.newTabSpec("实时显示").setIndicator(
 						getString(R.string.RealTime)), RealTimeFragment.class, null);
 		mTabsAdapter.addTab(
-				mTabHost.newTabSpec("版本信息").setIndicator(
-						getString(R.string.myversion)), VersionFragment.class,null);
+				mTabHost.newTabSpec("历史数据").setIndicator(
+						getString(R.string.history)), VersionFragment.class,null);
 		/*mTabsAdapter.addTab(
 				mTabHost.newTabSpec("ntag_rf").setIndicator(
 						getString(R.string.ntag_rf_text)),
@@ -161,7 +162,7 @@ public class MainActivity extends FragmentActivity  {
 		appVersion = "";
 		try {
 			PackageInfo pInfo = getPackageManager().getPackageInfo(
-					getPackageName(), 0);
+					getPackageName(), 0 );
 			appVersion = pInfo.versionName;
 		} catch (NameNotFoundException e) {
 			e.printStackTrace();

@@ -27,6 +27,7 @@
  */
 package com.example.administrator.wrongtry.activities.fragments;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -45,6 +46,7 @@ import android.widget.Toast;
 
 import com.example.administrator.wrongtry.R;
 import com.example.administrator.wrongtry.activities.activities.MainActivity;
+import com.example.administrator.wrongtry.activities.activities.SramTestActivity;
 import com.example.administrator.wrongtry.activities.data.MyData;
 
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ import static com.example.administrator.wrongtry.activities.activities.MainActiv
 public class NdefFragment extends Fragment implements OnClickListener{
 
 	private static TextView ndefTextone,ndefTexttwo,ndefTextthree,ndefTextfour;
-	private static Button readNdefButton;
+	private static Button readNdefButton,correctionButton;
     private static ArrayList<MyData> DataList;
     public static Chronometer timer;
     public static float CurrentGlu;
@@ -85,13 +87,15 @@ public class NdefFragment extends Fragment implements OnClickListener{
 		View layout = inflater
 				.inflate(R.layout.fragment_ndef, container, false);
 
-		ndefTextone = (TextView) layout.findViewById(R.id.ndefTextone);
-		ndefTexttwo = (TextView) layout.findViewById(R.id.ndefTexttwo);
-		ndefTextthree = (TextView) layout.findViewById(R.id.ndefTextthree);
-		ndefTextfour = (TextView) layout.findViewById(R.id.ndefTextfour);
-		readNdefButton = (Button) layout.findViewById(R.id.readNdefButton);
-        timer = (Chronometer) layout.findViewById(R.id.timer);
+		ndefTextone = layout.findViewById(R.id.ndefTextone);
+		ndefTexttwo = layout.findViewById(R.id.ndefTexttwo);
+		ndefTextthree = layout.findViewById(R.id.ndefTextthree);
+		ndefTextfour = layout.findViewById(R.id.ndefTextfour);
+		readNdefButton = layout.findViewById(R.id.readNdefButton);
+		correctionButton = layout.findViewById(R.id.correctionButton);
+        timer = layout.findViewById(R.id.timer);
 		readNdefButton.setOnClickListener(this);
+		correctionButton.setOnClickListener(this);
         // Operations for database
 		PerformClickFlag = true;// initial this flag as true
         RecordCurrentTime = true;// initial this flag as true
@@ -127,6 +131,11 @@ public class NdefFragment extends Fragment implements OnClickListener{
 				MainActivity.launchNdefDemo(MainActivity.getAuthStatus(), MainActivity.getPassword());
 			}
 			break;
+
+        case R.id.correctionButton:
+            Intent intent = new Intent(getActivity(),SramTestActivity.class);
+            startActivity(intent);
+            break;
 
 		default:
 			break;

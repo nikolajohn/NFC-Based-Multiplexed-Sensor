@@ -64,7 +64,7 @@
     <string name="leds">DEMO</string>
     <string name="ndefs">Data</string>
     <string name="RealTime">Real Time</string>
-    <string name="myversion">History</string>
+    <string name="history">History</string>
     <string name="ntag_rf_text">SPEED</string>
     <string name="settings">CONFIG</string>
     <string name="choose">Choose color</string>

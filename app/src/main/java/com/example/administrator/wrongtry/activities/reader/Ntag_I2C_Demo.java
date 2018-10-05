@@ -94,6 +94,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
 
     /**
      * Taskreferences.
+     * Inner Class
      */
     private LedTask lTask;
     private SRAMSpeedtestTask sramspeedtask;
@@ -281,10 +282,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
      * @return Boolean indicating demo readiness
      */
     public boolean isReady() {
-        if (tag != null && reader != null) {
-            return true;
-        }
-        return false;
+        return tag != null && reader != null;
     }
 
     /**
@@ -475,10 +473,9 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
      * @param register Byte Array of the Registers
      * @return String Array
      * @throws IOException
-     * @throws FormatException
      */
     private Ntag_I2C_Registers getRegister_Settings(byte[] register)
-            throws IOException, FormatException {
+            throws IOException {
         Ntag_I2C_Registers answer = new Ntag_I2C_Registers();
 
         Prod prod = reader.getProduct();
@@ -502,12 +499,8 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
         byte NC_Reg = register[SR_Offset.NC_REG.getValue()];
 
         // check I2C_RST_ON_OFF
-        if ((NC_Reg & NC_Reg_Func.I2C_RST_ON_OFF.getValue()) == NC_Reg_Func.I2C_RST_ON_OFF
-                .getValue()) {
-            answer.I2C_RST_ON_OFF = true;
-        } else {
-            answer.I2C_RST_ON_OFF = false;
-        }
+        answer.I2C_RST_ON_OFF = (NC_Reg & NC_Reg_Func.I2C_RST_ON_OFF.getValue()) == NC_Reg_Func.I2C_RST_ON_OFF
+                .getValue();
 
         // check FD_OFF
         byte tmpReg = (byte) (NC_Reg & NC_Reg_Func.FD_OFF.getValue());
@@ -546,69 +539,37 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
         byte NS_Reg = register[SR_Offset.NS_REG.getValue()];
 
         // check NDEF_DATA_READ
-        if ((NS_Reg & NS_Reg_Func.NDEF_DATA_READ.getValue()) == NS_Reg_Func.NDEF_DATA_READ
-                .getValue()) {
-            answer.NDEF_DATA_READ = true;
-        } else {
-            answer.NDEF_DATA_READ = false;
-        }
+        answer.NDEF_DATA_READ = (NS_Reg & NS_Reg_Func.NDEF_DATA_READ.getValue()) == NS_Reg_Func.NDEF_DATA_READ
+                .getValue();
 
         // check RF_FIELD
-        if ((NS_Reg & NS_Reg_Func.RF_FIELD_PRESENT.getValue()) == NS_Reg_Func.RF_FIELD_PRESENT
-                .getValue()) {
-            answer.RF_FIELD_PRESENT = true;
-        } else {
-            answer.RF_FIELD_PRESENT = false;
-        }
+        answer.RF_FIELD_PRESENT = (NS_Reg & NS_Reg_Func.RF_FIELD_PRESENT.getValue()) == NS_Reg_Func.RF_FIELD_PRESENT
+                .getValue();
 
         // check PTHRU_ON_OFF
-        if ((NC_Reg & (byte) NC_Reg_Func.PTHRU_ON_OFF.getValue()) == NC_Reg_Func.PTHRU_ON_OFF
-                .getValue()) {
-            answer.PTHRU_ON_OFF = true;
-        } else {
-            answer.PTHRU_ON_OFF = false;
-        }
+        answer.PTHRU_ON_OFF = (NC_Reg & NC_Reg_Func.PTHRU_ON_OFF.getValue()) == NC_Reg_Func.PTHRU_ON_OFF
+                .getValue();
 
         // check I2C_LOCKED
-        if ((NS_Reg & NS_Reg_Func.I2C_LOCKED.getValue()) == NS_Reg_Func.I2C_LOCKED
-                .getValue()) {
-            answer.I2C_LOCKED = true;
-        } else {
-            answer.I2C_LOCKED = false;
-        }
+        answer.I2C_LOCKED = (NS_Reg & NS_Reg_Func.I2C_LOCKED.getValue()) == NS_Reg_Func.I2C_LOCKED
+                .getValue();
 
         // check RF_LOCK
-        if ((NS_Reg & NS_Reg_Func.RF_LOCKED.getValue()) == NS_Reg_Func.RF_LOCKED
-                .getValue()) {
-            answer.RF_LOCKED = true;
-        } else {
-            answer.RF_LOCKED = false;
-        }
+        answer.RF_LOCKED = (NS_Reg & NS_Reg_Func.RF_LOCKED.getValue()) == NS_Reg_Func.RF_LOCKED
+                .getValue();
 
         // check check SRAM_I2C_Ready
-        if ((NS_Reg & NS_Reg_Func.SRAM_I2C_READY.getValue()) == NS_Reg_Func.SRAM_I2C_READY
-                .getValue()) {
-            answer.SRAM_I2C_READY = true;
-        } else {
-            answer.SRAM_I2C_READY = false;
-        }
+        answer.SRAM_I2C_READY = (NS_Reg & NS_Reg_Func.SRAM_I2C_READY.getValue()) == NS_Reg_Func.SRAM_I2C_READY
+                .getValue();
 
         // check SRAM_RF_READY
         tmpReg = (byte) (NS_Reg & NS_Reg_Func.SRAM_RF_READY.getValue());
-        if ((NS_Reg & NS_Reg_Func.SRAM_RF_READY.getValue()) == NS_Reg_Func.SRAM_RF_READY
-                .getValue()) {
-            answer.SRAM_RF_READY = true;
-        } else {
-            answer.SRAM_RF_READY = false;
-        }
+        answer.SRAM_RF_READY = (NS_Reg & NS_Reg_Func.SRAM_RF_READY.getValue()) == NS_Reg_Func.SRAM_RF_READY
+                .getValue();
 
         // check PTHRU_DIR
         tmpReg = (byte) (NC_Reg & (byte) 0x01);
-        if (tmpReg == (0x01)) {
-            answer.PTHRU_DIR = true;
-        } else {
-            answer.PTHRU_DIR = false;
-        }
+        answer.PTHRU_DIR = tmpReg == (0x01);
 
         // SM_Reg
         answer.SM_Reg = (0x00000FF & register[SR_Offset.SM_REG.getValue()]);
@@ -620,19 +581,11 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
         answer.WD_MS_Reg = (0x00000FF & register[SR_Offset.WDT_MS.getValue()]);
 
         // check SRAM_MIRROR_ON_OFF
-        if ((NC_Reg & NC_Reg_Func.SRAM_MIRROR_ON_OFF.getValue()) == NC_Reg_Func.SRAM_MIRROR_ON_OFF
-                .getValue()) {
-            answer.SRAM_MIRROR_ON_OFF = true;
-        } else {
-            answer.SRAM_MIRROR_ON_OFF = false;
-        }
+        answer.SRAM_MIRROR_ON_OFF = (NC_Reg & NC_Reg_Func.SRAM_MIRROR_ON_OFF.getValue()) == NC_Reg_Func.SRAM_MIRROR_ON_OFF
+                .getValue();
 
         // I2C_CLOCK_STR
-        if (register[SR_Offset.I2C_CLOCK_STR.getValue()] == 1) {
-            answer.I2C_CLOCK_STR = true;
-        } else {
-            answer.I2C_CLOCK_STR = false;
-        }
+        answer.I2C_CLOCK_STR = register[SR_Offset.I2C_CLOCK_STR.getValue()] == 1;
 
         // read NDEF Message
         try {
@@ -655,42 +608,23 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
      * @param pti2cRegister
      * @param accessRegister
      * @return String Array
-     * @throws IOException
-     * @throws FormatException
      */
     private Ntag_I2C_Plus_Registers getPlusAuth_Settings(byte[] auth0register,
                                                          byte[] accessRegister,
-                                                         byte[] pti2cRegister)
-            throws IOException, FormatException {
+                                                         byte[] pti2cRegister) {
         Ntag_I2C_Plus_Registers answerPlus = new Ntag_I2C_Plus_Registers();
 
         //Auth0 Register
         answerPlus.auth0 = (0x00000FF & auth0register[3]);
 
         //Access Register
-        if ((0x0000080 & accessRegister[0]) >> Access_Offset.NFC_PROT.getValue() == 1) {
-            answerPlus.nfcProt = true;
-        } else {
-            answerPlus.nfcProt = false;
-        }
-        if ((0x0000020 & accessRegister[0]) >> Access_Offset.NFC_DIS_SEC1.getValue() == 1) {
-            answerPlus.nfcDisSec1 = true;
-        } else {
-            answerPlus.nfcDisSec1 = false;
-        }
+        answerPlus.nfcProt = (0x0000080 & accessRegister[0]) >> Access_Offset.NFC_PROT.getValue() == 1;
+        answerPlus.nfcDisSec1 = (0x0000020 & accessRegister[0]) >> Access_Offset.NFC_DIS_SEC1.getValue() == 1;
         answerPlus.authlim = (0x0000007 & accessRegister[0]);
 
         //PT I2C Register
-        if ((0x0000008 & pti2cRegister[0]) >> PT_I2C_Offset.K2_PROT.getValue() == 1) {
-            answerPlus.k2Prot = true;
-        } else {
-            answerPlus.k2Prot = false;
-        }
-        if ((0x0000004 & pti2cRegister[0]) >> PT_I2C_Offset.SRAM_PROT.getValue() == 1) {
-            answerPlus.sram_prot = true;
-        } else {
-            answerPlus.sram_prot = false;
-        }
+        answerPlus.k2Prot = (0x0000008 & pti2cRegister[0]) >> PT_I2C_Offset.K2_PROT.getValue() == 1;
+        answerPlus.sram_prot = (0x0000004 & pti2cRegister[0]) >> PT_I2C_Offset.SRAM_PROT.getValue() == 1;
         answerPlus.i2CProt = (0x0000003 & pti2cRegister[0]);
         return answerPlus;
     }
@@ -895,7 +829,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
     /**
      * Performs the LED Demo
      */
-    public void LED() throws IOException, FormatException {
+    public void LED() {
         // Reset UI
         LedFragment.setAnswer(main.getResources().getString(R.string.readConf));
         LedFragment.setTemperatureC(0);
@@ -1042,7 +976,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
                     }
                     result = new Byte[2][];
                     result[0] = new Byte[1];
-                    result[0][0] = Byte.valueOf((byte) invalidTransfer);
+                    result[0][0] = Byte.valueOf(invalidTransfer);
                     result[1] = bytes;
 
                     // Write the result to the UI thread
@@ -1074,7 +1008,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
             Byte[][] result;
             result = new Byte[2][];
             result[0] = new Byte[1];
-            result[0][0] = Byte.valueOf((byte) dir);
+            result[0][0] = Byte.valueOf(dir);
             publishProgress(result);
         }
 
@@ -1171,7 +1105,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
     /**
      * Performs the NDEF Demo
      */
-    public void NDEF() throws IOException {
+    public void NDEF() {
         // 检查是读操作还是写操作
         // Check if the operation is read or write
         //if (NdefFragment.isWriteChosen() == true) {
@@ -1519,9 +1453,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
                     || authStatus == AuthStatus.Protected_W_SRAM.getValue()
                     || authStatus == AuthStatus.Protected_RW_SRAM.getValue()) {
                 byte[] pack = reader.authenticatePlus(pwd);
-                if (pack.length < 2) {
-                    return false;
-                }
+                return pack.length >= 2;
             }
             return true;
         } catch (IOException e) {
@@ -1557,10 +1489,8 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
     /**
      * Performs the SRAM Speedtest
      *
-     * @throws IOException
-     * @throws FormatException
      */
-    public void SRAMSpeedtest() throws IOException, FormatException {
+    public void SRAMSpeedtest() {
         sramspeedtask = new SRAMSpeedtestTask();
         sramspeedtask.execute();
     }
@@ -1768,11 +1698,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
 
                 // if a error is detected [reader.getSRAMSize() - 5] is set to
                 // 0x01
-                if (response[reader.getSRAMSize() - 5] == 0x01) {
-                    isValidTxData = false;
-                } else {
-                    isValidTxData = true;
-                }
+                isValidTxData = response[reader.getSRAMSize() - 5] != 0x01;
                 tagReadTime = System.currentTimeMillis() - currTime;
                 isValidFirmware = isCRC32Appended(response);
 
@@ -1932,12 +1858,8 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
     /**
      * Performs the EEPROM Speedtest.
      *
-     * @throws UnsupportedEncodingException
-     * @throws IOException
-     * @throws FormatException
      */
-    public void EEPROMSpeedtest() throws UnsupportedEncodingException,
-            IOException, FormatException {
+    public void EEPROMSpeedtest() {
         eepromspeedtask = new EEPROMSpeedtestTask(this);
         eepromspeedtask.execute();
     }
@@ -1988,7 +1910,7 @@ public class Ntag_I2C_Demo implements WriteEEPROMListener, WriteSRAMListener {
                 // NDEF is max Text length + 5 bytes
                 sendMessage = createNdefMessage(messageText);
                 ndefMessageSize = (sendMessage.toByteArray().length + 5);
-                ndefMessageSize = (int) Math.round(ndefMessageSize / 4) * 4;
+                ndefMessageSize = Math.round(ndefMessageSize / 4) * 4;
 
                 // if NDEF is shorter as Memsize write_EEPROM else write an
                 // error
